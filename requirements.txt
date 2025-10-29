@@ -1,0 +1,102 @@
+# ============================================================================
+# Image Deduplication Project - Requirements
+# Đề tài: Rút gọn tập ảnh lớn bằng phát hiện ảnh trùng nội dung
+# ============================================================================
+
+# Core Dependencies (REQUIRED)
+# ----------------------------------------------------------------------------
+numpy>=2.0.0,<3.0.0           # Numerical computing (compatible with latest packages)
+torch>=1.10.0                 # PyTorch deep learning framework
+torchvision>=0.11.0           # PyTorch vision models and transforms
+Pillow>=8.0.0                 # Python Imaging Library
+
+# Deep Learning Models (REQUIRED for feature extraction)
+# ----------------------------------------------------------------------------
+timm>=0.6.0                   # PyTorch Image Models (EfficientNet, ConvNeXt, ViT)
+
+# Similarity Search & LSH (REQUIRED)
+# ----------------------------------------------------------------------------
+faiss-cpu>=1.7.0              # Facebook AI Similarity Search (CPU version)
+# faiss-gpu>=1.7.0            # Uncomment for GPU support (requires CUDA)
+pybind11>=2.6.0               # C++ bindings for Python (required for LSH C++ module)
+setuptools>=50.0.0            # Required for building C++ extensions
+datasketch>=1.5.0             # MinHash LSH implementation (for comparison)
+
+# Image Processing (REQUIRED)
+# ----------------------------------------------------------------------------
+opencv-python>=4.5.0          # Computer vision library (used in image_utils)
+ImageHash>=4.2.0              # Perceptual image hashing algorithms
+
+# Data Manipulation (REQUIRED)
+# ----------------------------------------------------------------------------
+pandas>=1.2.0                 # Data frames and CSV handling
+tabulate>=0.8.0               # Pretty-print tables for results display
+
+# Visualization (REQUIRED for benchmarks and evaluation)
+# ----------------------------------------------------------------------------
+matplotlib>=3.3.0             # Plotting library
+seaborn>=0.11.0               # Statistical visualization
+
+# Evaluation & Metrics (REQUIRED)
+# ----------------------------------------------------------------------------
+scikit-learn>=0.24.0          # Machine learning metrics and clustering
+scipy>=1.5.0                  # Scientific computing
+
+# System Monitoring (REQUIRED)
+# ----------------------------------------------------------------------------
+psutil>=5.8.0                 # Memory and CPU usage monitoring
+
+# Dimensionality Reduction (REQUIRED for visualization)
+# ----------------------------------------------------------------------------
+umap-learn>=0.5.0             # UMAP for embedding visualization
+
+# Optional - Advanced Visualization
+# ----------------------------------------------------------------------------
+# plotly>=5.0.0               # Interactive plots (not used in core pipeline)
+# scikit-image>=0.18.0        # Advanced image processing (not used in core)
+
+# Optional - Progress Bars
+# ----------------------------------------------------------------------------
+# tqdm>=4.60.0                # Progress bars (commented out, not critical)
+
+# Optional - Testing
+# ----------------------------------------------------------------------------
+# pytest>=6.0.0               # Testing framework
+# pytest-cov>=2.12.0          # Coverage plugin
+
+# Optional - Jupyter Notebooks
+# ----------------------------------------------------------------------------
+# jupyter>=1.0.0              # Jupyter notebooks
+# notebook>=6.4.0             # Jupyter notebook server
+
+# ============================================================================
+# Installation Instructions
+# ============================================================================
+#
+# 1. Cài đặt dependencies cơ bản:
+#    pip install -r requirements.txt
+#
+# 2. Compile C++ LSH module:
+#    cd src/lsh_cpp_module
+#    python setup.py build_ext --inplace
+#
+# 3. Kiểm tra installation:
+#    python -c "import torch; import faiss; import lsh_cpp_module; print('OK')"
+#
+# ============================================================================
+# Platform-Specific Notes
+# ============================================================================
+#
+# macOS:
+#   - Install Xcode Command Line Tools: xcode-select --install
+#   - For OpenMP support: brew install libomp
+#
+# Linux:
+#   - Install build tools: sudo apt-get install build-essential
+#   - For CUDA support: install CUDA toolkit và dùng faiss-gpu
+#
+# Windows:
+#   - Install Visual Studio Build Tools
+#   - Some packages may need pre-built wheels
+#
+# ============================================================================

@@ -1,0 +1,99 @@
+# -----------------------------
+# Bytecode / cache
+# -----------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# -----------------------------
+# Virtual environments
+# -----------------------------
+venv/
+env/
+.venv/
+.env/
+
+# -----------------------------
+# Jupyter Notebook
+# -----------------------------
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# -----------------------------
+# Logs / debug
+# -----------------------------
+*.log
+*.out
+*.err
+
+# -----------------------------
+# PyTorch / ML checkpoints
+# -----------------------------
+*.pt
+*.pth
+*.ckpt
+*.h5
+
+# -----------------------------
+# Dataset / output
+# -----------------------------
+data/
+output/
+figures/
+*.npz
+*.npy
+
+# -----------------------------
+# IDE / editor
+# -----------------------------
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# -----------------------------
+# OS files
+# -----------------------------
+.DS_Store
+Thumbs.db
+
+
+# ========================
+# C++ build artifacts
+# ========================
+
+# Object files
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Debug / Release build folders
+build/
+bin/
+debug/
+release/
+x64/
+x86/
+
+# IDE temporary files
+*.log
+*.tmp
+*.bak
+*.swp
