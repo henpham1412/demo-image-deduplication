@@ -17,8 +17,13 @@
     body { background:var(--bg); color:#0b1220; margin:0; line-height:1.6; overflow-x:hidden; }
     .wrap { max-width:var(--maxw); margin:36px auto; padding:20px; }
     header { display:flex; align-items:center; gap:16px; flex-wrap:wrap; justify-content:space-between; }
-    .logo { width:64px; height:64px; border-radius:8px; background:linear-gradient(135deg,#0ea5e9,#6366f1);
-            display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:18px; }
+    .logo {
+  width:64px;
+  height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
     .hcmut-logo { height:64px; }
     h1 { margin:0; font-size:1.8rem; }
     p.lead { color:var(--muted); margin-top:8px; max-width:600px; }
@@ -43,7 +48,7 @@
   <div class="wrap">
     <header>
       <div style="display:flex;align-items:center;gap:12px;">
-        <div class="logo">ID</div>
+        <div class="logo"><img src="assets/logo.png" alt="HCMUT Logo" class="hcmut-logo"></div>
         <div>
           <h1>Image Deduplication with Deep Learning & LSH</h1>
           <p class="lead">
@@ -53,7 +58,6 @@
           </p>
         </div>
       </div>
-      <img src="assets/logo.png" alt="HCMUT Logo" class="hcmut-logo">
     </header>
 
     <nav class="nav">
@@ -67,7 +71,7 @@
         This project implements a <strong>large-scale image deduplication system</strong> combining deep learning
         feature extraction with efficient similarity search algorithms (FAISS, SimHash C++, and MinHash).
       </p>
-      <img src="assets/pipeline_diagram.svg" alt="Pipeline Diagram" class="hero">
+      <img src="assets/pipeline_diagram.svg" alt="Pipeline Diagram" class="hero" style="max-width:100%; width:90%; display:block; margin:20px auto;">
     </section>
 
     <section class="grid">
@@ -100,10 +104,14 @@ python setup.py build_ext --inplace
       <div class="card">
         <h3>📂 Structure</h3>
         <pre class="cmd">
-src/feature_extraction/
-src/similarity_search/
-run_pipeline.py
-report/
+├── data/raw/             # Input images
+├── data/processed/       # Results
+├── src/
+│   ├── feature_extraction/
+│   ├── similarity_search/
+│   └── lsh_cpp_module/   # C++ SimHash
+├── run_pipeline.py
+└── view_results.py
         </pre>
       </div>
     </section>

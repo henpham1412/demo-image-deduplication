@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <svg width="1200" height="420" viewBox="0 0 1200 420" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
     <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
@@ -23,7 +23,6 @@
 
   <!-- Header -->
   <text x="36" y="36" class="title">Pipeline overview — Image Deduplication</text>
-  <text x="36" y="56" class="small">Feature extraction → Similarity search → Clustering → Evaluation</text>
 
   <!-- Feature extractor card -->
   <g transform="translate(40,90)">
@@ -62,7 +61,7 @@
 
     <g transform="translate(20,88)">
       <rect width="200" height="28" rx="8" fill="#f0f7ff"/>
-      <text x="12" y="18" class="small">D (distances), I (indices) — shape N×k</text>
+      <text x="12" y="18" class="small">D (distances), I (indices) — shape N × k</text>
     </g>
 
     <g transform="translate(20,126)">
@@ -80,7 +79,7 @@
     <rect width="260" height="120" class="card" filter="url(#shadow)"/>
     <text x="20" y="40" class="label">Clustering (single-link)</text>
     <text x="20" y="64" class="small">cluster_from_knn(I, D, threshold)</text>
-    <text x="20" y="88" class="small">Output: list of clusters & representatives</text>
+    <text x="20" y="88" class="small">Output: list of clusters &amp; representatives</text>
   </g>
 
   <!-- arrow from kNN to clustering -->
@@ -89,7 +88,7 @@
   <!-- Evaluation -->
   <g transform="translate(40,240)">
     <rect width="340" height="140" class="card" filter="url(#shadow)"/>
-    <text x="20" y="38" class="label">Evaluation & outputs</text>
+    <text x="20" y="38" class="label">Evaluation &amp; outputs</text>
     <text x="20" y="62" class="small">Precision / Recall / TP/FP/FN / timing / memory</text>
     <text x="20" y="86" class="small">Ground-truth pairs (from filenames)</text>
     <text x="20" y="110" class="small">Saved: clusters.json, evaluation_full.json, features.npy</text>
