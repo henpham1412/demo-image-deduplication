@@ -6,42 +6,54 @@
   <title>Image Deduplication with Deep Learning & LSH</title>
   <meta name="description" content="Image Deduplication system using Deep Learning, FAISS, SimHash (C++), and MinHash — implemented as part of HCMUT Data Structures & Algorithms course project."/>
   <link rel="stylesheet" href="https://unpkg.com/normalize.css/normalize.css" />
+
   <style>
     :root {
       --accent:#0066cc; --bg:#f7f9fb; --card:#ffffff; --muted:#6b7280;
       --maxw:1000px;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     }
-    body { background:var(--bg); color:#0b1220; margin:0; line-height:1.5 }
-    .wrap { max-width:var(--maxw); margin:36px auto; padding:20px }
-    header { display:flex; align-items:center; gap:16px; flex-wrap:wrap }
-    .logo { width:64px; height:64px; border-radius:8px; background:linear-gradient(135deg,#0ea5e9,#6366f1); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:18px }
-    h1 { margin:0; font-size:1.6rem }
-    p.lead { color:var(--muted); margin-top:8px }
-    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; margin-top:20px }
-    .card { background:var(--card); border-radius:10px; padding:16px; box-shadow:0 6px 18px rgba(11,18,32,0.06) }
-    .card h3 { margin:0 0 8px 0 }
-    .small { font-size:0.95rem; color:var(--muted) }
-    pre.cmd { background:#0b1220; color:#f8fafc; padding:10px; border-radius:6px; overflow:auto; font-size:0.9rem }
-    footer { margin-top:28px; color:var(--muted); font-size:0.9rem; text-align:center }
-    .nav { display:flex; gap:12px; margin-top:12px; flex-wrap:wrap }
-    a.btn { display:inline-block; padding:8px 12px; border-radius:8px; background:var(--accent); color:white; text-decoration:none }
-    ul, ol { padding-left:20px }
-    section { margin-top:30px }
+    html { scroll-behavior: smooth; }
+    body { background:var(--bg); color:#0b1220; margin:0; line-height:1.6; overflow-x:hidden; }
+    .wrap { max-width:var(--maxw); margin:36px auto; padding:20px; }
+    header { display:flex; align-items:center; gap:16px; flex-wrap:wrap; justify-content:space-between; }
+    .logo { width:64px; height:64px; border-radius:8px; background:linear-gradient(135deg,#0ea5e9,#6366f1);
+            display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:18px; }
+    .hcmut-logo { height:64px; }
+    h1 { margin:0; font-size:1.8rem; }
+    p.lead { color:var(--muted); margin-top:8px; max-width:600px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; margin-top:20px; }
+    .card { background:var(--card); border-radius:10px; padding:16px; box-shadow:0 6px 18px rgba(11,18,32,0.06);
+            opacity:0; transform:translateY(20px); transition:all 0.6s ease; }
+    .card.visible { opacity:1; transform:translateY(0); }
+    .card h3 { margin:0 0 8px 0; }
+    .small { font-size:0.95rem; color:var(--muted); }
+    pre.cmd { background:#0b1220; color:#f8fafc; padding:10px; border-radius:6px; overflow:auto; font-size:0.9rem; }
+    footer { margin-top:40px; color:var(--muted); font-size:0.9rem; text-align:center; }
+    .nav { display:flex; gap:12px; margin-top:12px; flex-wrap:wrap; }
+    a.btn { display:inline-block; padding:8px 12px; border-radius:8px; background:var(--accent); color:white; text-decoration:none; transition:background 0.3s; }
+    a.btn:hover { background:#004c99; }
+    ul, ol { padding-left:20px; }
+    section { margin-top:40px; }
+    img.hero { width:100%; max-width:800px; display:block; margin:0 auto; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.08); }
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <header>
-      <div class="logo">ID</div>
-      <div>
-        <h1>Image Deduplication with Deep Learning & LSH</h1>
-        <p class="lead">
-          Course Project — <strong>Data Structures & Algorithms</strong><br>
-          <em>Ho Chi Minh City University of Technology (HCMUT)</em><br>
-          <strong>Team:</strong> Lê Bảo Tấn Phong, Nguyễn Anh Quân, Phạm Văn Hên
-        </p>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="logo">ID</div>
+        <div>
+          <h1>Image Deduplication with Deep Learning & LSH</h1>
+          <p class="lead">
+            Course Project — <strong>Data Structures & Algorithms</strong><br>
+            <em>Ho Chi Minh City University of Technology (HCMUT)</em><br>
+            <strong>Team:</strong> Lê Bảo Tấn Phong, Nguyễn Anh Quân, Phạm Văn Hên
+          </p>
+        </div>
       </div>
+      <img src="assets/logo.png" alt="HCMUT Logo" class="hcmut-logo">
     </header>
 
     <nav class="nav">
@@ -52,33 +64,28 @@
     <section>
       <h2>🚀 Overview</h2>
       <p>
-        This project implements a <strong>large-scale image deduplication system</strong> that combines deep learning
-        feature extraction with efficient similarity search algorithms to detect and remove duplicate or near-duplicate
-        images. It integrates FAISS, SimHash LSH (C++), and MinHash with benchmarking of accuracy, speed, and memory usage.
+        This project implements a <strong>large-scale image deduplication system</strong> combining deep learning
+        feature extraction with efficient similarity search algorithms (FAISS, SimHash C++, and MinHash).
       </p>
-      <ul>
-        <li><strong>Feature Extraction:</strong> ResNet50, EfficientNet-B0, ViT</li>
-        <li><strong>Similarity Search:</strong> FAISS, SimHash LSH (C++), MinHash LSH</li>
-        <li><strong>Performance Comparison:</strong> Accuracy, speed, and memory</li>
-        <li><strong>Deduplication:</strong> Representative image selection from clusters</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>🧠 Implemented Methods</h2>
-      <ul>
-        <li><strong>FAISS:</strong> Exact & approximate nearest neighbor search, GPU acceleration</li>
-        <li><strong>SimHash (C++):</strong> Locality-Sensitive Hashing with multi-probing via Pybind11</li>
-        <li><strong>MinHash:</strong> Jaccard similarity estimation for baseline comparison</li>
-      </ul>
+      <img src="assets/pipeline_diagram.svg" alt="Pipeline Diagram" class="hero">
     </section>
 
     <section class="grid">
       <div class="card">
+        <h3>🧠 Methods</h3>
+        <ul class="small">
+          <li><strong>FAISS:</strong> Exact & approximate nearest neighbor search</li>
+          <li><strong>SimHash (C++):</strong> Locality-Sensitive Hashing</li>
+          <li><strong>MinHash:</strong> Jaccard similarity estimation</li>
+        </ul>
+      </div>
+
+      <div class="card">
         <h3>⚡ Quick Start</h3>
-        <pre class="cmd">python run_pipeline.py</pre>
-        <p class="small">Default: EfficientNet-B0 + FAISS</p>
-        <pre class="cmd">python run_pipeline.py --extractor resnet --method simhash --hamming-threshold 6</pre>
+        <pre class="cmd">
+python run_pipeline.py --dataset demo_dataset
+python run_pipeline.py --extractor resnet --method simhash --hamming-threshold 6
+        </pre>
       </div>
 
       <div class="card">
@@ -87,30 +94,27 @@
 pip install -r requirements.txt
 cd src/lsh_cpp_module
 python setup.py build_ext --inplace
-python run_pipeline.py
         </pre>
       </div>
 
       <div class="card">
         <h3>📂 Structure</h3>
         <pre class="cmd">
-data/raw/          # Input images
-data/processed/    # Results
 src/feature_extraction/
 src/similarity_search/
 run_pipeline.py
-view_results.py
+report/
         </pre>
       </div>
+    </section>
 
-      <div class="card">
-        <h3>🎯 Findings</h3>
-        <ul class="small">
-          <li>✅ FAISS: Best accuracy & speed</li>
-          <li>✅ SimHash: Best scalability</li>
-          <li>⚠️ Multi-probing improves recall significantly</li>
-        </ul>
-      </div>
+    <section>
+      <h2>🎯 Findings</h2>
+      <ul>
+        <li>✅ FAISS offers best accuracy-speed tradeoff.</li>
+        <li>✅ SimHash scales best for large datasets.</li>
+        <li>⚠️ Multi-probing greatly improves recall.</li>
+      </ul>
     </section>
 
     <section>
@@ -119,24 +123,27 @@ view_results.py
 @misc{image-deduplication-2025,
   title={Large-Scale Image Deduplication using Deep Learning and Locality-Sensitive Hashing},
   author={Lê Bảo Tấn Phong and Nguyễn Anh Quân and Phạm Văn Hên},
-  institution={Ho Chi Minh City University of Technology},
+  institution={HCMUT},
   year={2025},
   note={Course Project: Data Structures & Algorithms}
 }
       </pre>
     </section>
 
-    <section>
-      <h2>📧 Contact</h2>
-      <p class="small">
-        GitHub Issues: <a href="https://github.com/tanphong-sudo/image-deduplication-project/issues">Report bugs</a><br>
-        <strong>Team:</strong> Lê Bảo Tấn Phong · Nguyễn Anh Quân · Phạm Văn Hên
-      </p>
-    </section>
-
     <footer>
       © 2025 HCMUT — Data Structures & Algorithms Course Project
     </footer>
   </div>
+
+  <script>
+    // Hiệu ứng xuất hiện khi cuộn
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.card').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
